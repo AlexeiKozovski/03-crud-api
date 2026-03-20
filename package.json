@@ -1,0 +1,15 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "Node.js CRUD API for a Product Catalog using an in-memory database underneathrepository",
+  "engines": {
+    "node": ">=24.10.0",
+    "npm": ">=10.9.2"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "author": "AlexeiKozovski",
+  "license": "ISC"
+}
