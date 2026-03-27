@@ -10,9 +10,13 @@ if (Number.isNaN(port) || port < 1) {
 const store = new MemoryProductStore();
 const app = buildApp(store);
 
-try {
-  await app.listen({ port, host: '0.0.0.0' });
-} catch (err) {
-  app.log.error(err);
-  process.exit(1);
+async function main() {
+  try {
+    await app.listen({ port, host: '0.0.0.0' });
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
 }
+
+void main();

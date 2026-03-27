@@ -1,4 +1,6 @@
 import Fastify from 'fastify';
+import swagger from '@fastify/swagger';
+import swaggerUi from '@fastify/swagger-ui';
 import { registerProductRoutes } from './routes/products.js';
 import { ProductNotFoundError } from './store/product-store.js';
 import type { ProductStore } from './store/product-store.js';
@@ -6,6 +8,24 @@ import type { ProductStore } from './store/product-store.js';
 export function buildApp(store: ProductStore) {
   const app = Fastify({
     logger: process.env.NODE_ENV !== 'test',
+  });
+
+  void app.register(swagger, {
+    openapi: {
+      openapi: '3.0.3',
+      info: {
+        title: 'Product Catalog API',
+        version: '1.0.0',
+      },
+    },
+  });
+
+  void app.register(swaggerUi, {
+    routePrefix: '/docs',
+    uiConfig: {
+      docExpansion: 'list',
+      deepLinking: false,
+    },
   });
 
   app.setNotFoundHandler((_request, reply) => {
