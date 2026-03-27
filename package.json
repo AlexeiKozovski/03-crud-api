@@ -8,8 +8,48 @@
   },
   "type": "module",
   "scripts": {
-    "start": "node src/main.js"
+    "build": "tsc -p tsconfig.build.json",
+    "build:cluster": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
+    "start:dev": "cross-env NODE_ENV=development tsx watch src/server.ts",
+    "start:prod": "npm run build && cross-env NODE_ENV=production node dist/server.js",
+    "start:multi": "tsx src/cluster.ts",
+    "start:multi:prod": "npm run build:cluster && cross-env NODE_ENV=production node dist/cluster.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "author": "AlexeiKozovski",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/swagger": "^9.7.0",
+    "@fastify/swagger-ui": "^5.2.5",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/node": "^22.13.10",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.22.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-zod-x": "^1.7.1",
+    "globals": "^16.0.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.1",
+    "vitest": "^3.0.9"
+  }
 }
