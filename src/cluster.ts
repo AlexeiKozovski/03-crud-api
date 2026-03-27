@@ -77,10 +77,8 @@ if (cluster.isPrimary) {
   for (let i = 0; i < workerCount; i++) {
     const workerPort = workerPorts[i]!;
     cluster.fork({
-      env: {
-        ...process.env,
-        WORKER_PORT: String(workerPort),
-      },
+      ...process.env,
+      WORKER_PORT: String(workerPort),
     });
   }
 } else {
