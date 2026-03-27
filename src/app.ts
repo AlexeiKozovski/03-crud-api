@@ -1,4 +1,4 @@
-import Fastify from 'fastify';
+import Fastify, { type FastifyError } from 'fastify';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
 import { registerProductRoutes } from './routes/products.js';
@@ -37,6 +37,15 @@ export function buildApp(store: ProductStore) {
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof ProductNotFoundError) {
       return reply.status(404).send({ message: error.message });
+    }
+    const fastifyError = error as FastifyError;
+    if (fastifyError.validation?.length) {
+      return reply.status(400).send({
+        message: 'Request body or parameters did not match the expected format.',
+      });
+    }
+    if (fastifyError.statusCode === 400) {
+      return reply.status(400).send({ message: fastifyError.message });
     }
     request.log.error(error);
     if (reply.sent) {
